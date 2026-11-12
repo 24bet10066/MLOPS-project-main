@@ -3,14 +3,16 @@
   "builds": [
     {
       "src": "app.py",
-      "use": "@vercel/python",
-      "config": {
-        "includeFiles": [
-          "outputs.zip"
-        ]
-      }
+      "use": "@vercel/python"
     }
   ],
+  "functions": {
+    "app.py": {
+      "includeFiles": [
+        "outputs.zip"
+      ]
+    }
+  },
   "routes": [
     {
       "src": "/(.*)",
