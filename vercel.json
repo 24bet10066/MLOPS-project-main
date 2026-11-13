@@ -3,7 +3,9 @@
   "functions": {
     "app.py": {
       "includeFiles": [
-        "artifacts/**"
+        "artifacts/**",
+        "templates/**",
+        "static/**"
       ]
     }
   }

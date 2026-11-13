@@ -1,8 +1,8 @@
-"""JSON API for the exported Yelp sentiment model.
+"""Web dashboard and JSON API for the exported Yelp sentiment model.
 
 The application loads an ``artifacts`` directory when present. If it is not
 present, it extracts the first usable outputs archive in the project root into
-``.model_cache``.
+a writable temporary cache.
 """
 
 import json
@@ -12,12 +12,12 @@ import zipfile
 from pathlib import Path
 
 import joblib
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, render_template, request
 
 
 ROOT = Path(__file__).resolve().parent
 ARTIFACTS = ROOT / "artifacts"
-MODEL_CACHE = ROOT / ".model_cache"
+MODEL_CACHE = Path(os.getenv("MODEL_CACHE", "/tmp/yelp-sentiment-model"))
 ARCHIVE_NAME = ("outputs.zip",)
 
 
@@ -109,6 +109,11 @@ def _text_from_payload(payload):
 
 
 @app.get("/")
+def dashboard():
+    return render_template("index.html")
+
+
+@app.get("/api")
 def service_info():
     return jsonify(
         {

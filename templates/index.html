@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Analyze the sentiment of a Yelp review with a machine learning model.">
+    <title>Sentiment Studio | Yelp AI</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="topbar">
+        <a class="brand" href="/" aria-label="Sentiment Studio home">
+          <span class="brand-mark" aria-hidden="true">✦</span>
+          <span>Sentiment<span class="brand-muted">Studio</span></span>
+        </a>
+        <div class="connection-status" id="connection-status">
+          <span class="status-dot"></span>
+          <span id="status-label">Checking model</span>
+        </div>
+      </header>
+
+      <main>
+        <section class="hero">
+          <p class="eyebrow">YELP REVIEW INTELLIGENCE</p>
+          <h1>Understand the feeling<br><span>behind every review.</span></h1>
+          <p class="hero-copy">Paste a review below and get an instant, transparent sentiment read powered by your trained model.</p>
+        </section>
+
+        <section class="workspace" aria-label="Sentiment analyzer">
+          <div class="composer panel">
+            <div class="section-heading">
+              <div>
+                <p class="kicker">01 / INPUT</p>
+                <h2>Analyze a review</h2>
+              </div>
+              <span class="model-pill">TF-IDF + Logistic Regression</span>
+            </div>
+            <label class="sr-only" for="review-text">Review text</label>
+            <textarea id="review-text" maxlength="5000" placeholder="Tell us what you thought about your experience..." spellcheck="true"></textarea>
+            <div class="composer-footer">
+              <span class="char-count"><span id="char-count">0</span> / 5,000</span>
+              <button class="primary-button" id="analyze-button" type="button">
+                <span>Analyze sentiment</span>
+                <span class="button-arrow" aria-hidden="true">→</span>
+              </button>
+            </div>
+            <div class="examples">
+              <span>Try an example</span>
+              <button type="button" class="example-chip" data-example="The food was absolutely delicious and the staff made us feel so welcome!">Delicious &amp; welcoming</button>
+              <button type="button" class="example-chip" data-example="Terrible service. We waited an hour and our order was still wrong.">Poor service</button>
+            </div>
+            <p class="form-error" id="form-error" role="alert"></p>
+          </div>
+
+          <div class="result panel" id="result-panel" aria-live="polite">
+            <div class="section-heading">
+              <div>
+                <p class="kicker">02 / RESULT</p>
+                <h2 id="result-heading">Your result will appear here</h2>
+              </div>
+              <span class="result-badge" id="result-badge">WAITING</span>
+            </div>
+            <div class="empty-state" id="empty-state">
+              <div class="empty-icon" aria-hidden="true">◌</div>
+              <p>Write or paste a review, then select <strong>Analyze sentiment</strong>.</p>
+            </div>
+            <div class="result-content hidden" id="result-content">
+              <div class="sentiment-summary">
+                <div class="sentiment-icon" id="sentiment-icon" aria-hidden="true">✦</div>
+                <div>
+                  <p class="summary-label">PREDICTED SENTIMENT</p>
+                  <p class="sentiment-label" id="sentiment-label">Positive</p>
+                </div>
+                <div class="confidence">
+                  <span>Confidence</span>
+                  <strong id="confidence-value">0%</strong>
+                </div>
+              </div>
+              <div class="probabilities" id="probabilities"></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="model-strip panel">
+          <div class="model-strip-title">
+            <span class="mini-mark" aria-hidden="true">✦</span>
+            <div><p class="kicker">MODEL DETAILS</p><h2>Built for clarity</h2></div>
+          </div>
+          <div class="detail"><span>Model</span><strong id="model-type">Loading...</strong></div>
+          <div class="detail"><span>Labels</span><strong id="model-labels">Loading...</strong></div>
+          <div class="detail"><span>Best C</span><strong id="model-c">—</strong></div>
+          <div class="detail"><span>API</span><strong class="api-ready"><i></i> Ready</strong></div>
+        </section>
+      </main>
+
+      <footer><span>Sentiment Studio</span><span>Private by design · Reviews are analyzed in real time</span></footer>
+    </div>
+    <script src="{{ url_for('static', filename='app.js') }}"></script>
+  </body>
+</html>
