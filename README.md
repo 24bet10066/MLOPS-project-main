@@ -20,7 +20,8 @@ same-origin API, so no frontend URL or CORS configuration is required.
 - **Render:** create a Web Service from this repository. Render can use `render.yaml`, or set the build command to `pip install -r requirements.txt` and the start command to `gunicorn app:app`.
 - **Vercel:** import this repository as a project. `vercel.json` configures the Python function automatically.
 
-The committed `outputs.zip` contains the model artifacts required at runtime.
+The committed model artifacts and frontend assets are stored under
+`api/assets/` so Vercel can bundle only the files required by the function.
 If the archive must be extracted (for example, when the deployment bundle does
 not include `artifacts/`), the API uses `/tmp/yelp-sentiment-model` because
 serverless deployment directories are read-only.

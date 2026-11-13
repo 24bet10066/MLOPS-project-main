@@ -16,7 +16,8 @@ from flask import Flask, jsonify, render_template, request
 
 
 ROOT = Path(__file__).resolve().parent
-ARTIFACTS = ROOT / "artifacts"
+ASSETS = ROOT / "api" / "assets"
+ARTIFACTS = ASSETS / "artifacts"
 MODEL_CACHE = Path(os.getenv("MODEL_CACHE", "/tmp/yelp-sentiment-model"))
 ARCHIVE_NAME = ("outputs.zip",)
 
@@ -81,7 +82,11 @@ VECTORIZER = MODEL_BUNDLE["vec"]
 MODEL = MODEL_BUNDLE["model"]
 LABELS = META.get("labels", ["negative", "neutral", "positive"])
 
-app = Flask(__name__)
+app = Flask(
+    __name__,
+    template_folder=str(ASSETS / "templates"),
+    static_folder=str(ASSETS / "static"),
+)
 
 
 def _clean_text(text: str) -> str:
